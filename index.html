@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Student Analytics</title>
+  <link rel="stylesheet" href="css/styles.css?v=11">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script>(function(){var t=localStorage.getItem('ssa_theme')||'light';document.documentElement.setAttribute('data-theme',t);})();</script>
+</head>
+<body>
+  <!-- Login screen -->
+  <div class="login-screen" id="loginScreen" style="display:none">
+    <button class="theme-toggle login-theme-toggle" id="loginThemeToggle" aria-label="Ganti tema">
+      <span class="theme-icon">&#9790;</span>
+    </button>
+    <div class="login-card">
+      <div class="login-header">
+        <div class="login-logo">⚛</div>
+        <h1>Smart Student Analytics</h1>
+        <p>Silakan masuk untuk melanjutkan</p>
+      </div>
+      <div class="login-form">
+        <div class="login-field">
+          <label class="label">Username</label>
+          <input type="text" class="input" id="loginUsername" placeholder="Masukkan username" autocomplete="username">
+        </div>
+        <div class="login-field">
+          <label class="label">Password</label>
+          <input type="password" class="input" id="loginPassword" placeholder="Masukkan password" autocomplete="current-password">
+        </div>
+        <div class="login-error" id="loginError" style="display:none"></div>
+        <button class="btn btn-primary login-btn" id="loginBtn">Masuk</button>
+      </div>
+      <div style="text-align:center;margin-top:1rem">
+        <span class="text-sm text-gray">Belum punya akun? </span>
+        <button class="btn-link" id="goRegisterBtn">Daftar sebagai Guru</button>
+      </div>
+      <div class="login-hint">
+        <p class="login-hint-title">Akun Demo:</p>
+        <div class="login-hint-row"><span class="badge badge-purple">Admin</span> <code>admin</code> / <code>admin123</code></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Register screen -->
+  <div class="login-screen" id="registerScreen" style="display:none">
+    <div class="login-card" style="max-width:460px">
+      <div class="login-header">
+        <div class="login-logo" style="background:linear-gradient(135deg,#10b981,#059669)">&#128100;</div>
+        <h1>Daftar Akun Guru</h1>
+        <p>Isi data berikut. Akun akan aktif setelah disetujui Admin.</p>
+      </div>
+      <div class="login-field">
+        <label class="label">Nama Lengkap *</label>
+        <input type="text" class="input" id="regName" placeholder="cth: Siti Rahayu">
+      </div>
+      <div class="login-field">
+        <label class="label">Username * <span class="text-sm text-gray">(min. 4 karakter)</span></label>
+        <input type="text" class="input" id="regUsername" placeholder="cth: siti.rahayu" autocomplete="off">
+      </div>
+      <div class="login-field">
+        <label class="label">Password * <span class="text-sm text-gray">(min. 6 karakter)</span></label>
+        <input type="password" class="input" id="regPassword" placeholder="Buat password" autocomplete="new-password">
+      </div>
+      <div class="login-field">
+        <label class="label">Konfirmasi Password *</label>
+        <input type="password" class="input" id="regConfirm" placeholder="Ulangi password">
+      </div>
+      <div class="login-error"   id="registerError"   style="display:none"></div>
+      <div class="login-success" id="registerSuccess" style="display:none"></div>
+      <button class="btn btn-primary login-btn" id="registerBtn">Daftar Sekarang</button>
+      <div style="text-align:center;margin-top:1rem">
+        <button class="btn-link" id="goLoginBtn">&#8592; Kembali ke halaman masuk</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main app -->
+  <div class="app" id="appView">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <div class="logo-icon">⚛</div>
+          <div class="logo-text">
+            <h1>Smart Student</h1>
+            <span>Analytics</span>
+          </div>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="#dashboard" class="nav-item active" data-route="dashboard">
+          <span class="nav-icon">🏠︎</span>
+          <span class="nav-label">Dashboard</span>
+        </a>
+        <a href="#students" class="nav-item" data-route="students">
+          <span class="nav-icon">🗐</span>
+          <span class="nav-label">Data Siswa</span>
+        </a>
+        <a href="#analytics" class="nav-item" data-route="analytics">
+          <span class="nav-icon">🕮</span>
+          <span class="nav-label">Learning Analytics</span>
+        </a>
+        <a href="#interests" class="nav-item" data-route="interests">
+          <span class="nav-icon">☑</span>
+          <span class="nav-label">Minat &amp; Bakat</span>
+        </a>
+        <a href="#learning" class="nav-item" data-route="learning">
+          <span class="nav-icon">★</span>
+          <span class="nav-label">Personalized Learning</span>
+        </a>
+        <a href="#management" class="nav-item" data-route="management">
+          <span class="nav-icon">✎</span>
+          <span class="nav-label">Manajemen Siswa</span>
+        </a>
+        <a href="#accounts" class="nav-item" data-route="accounts">
+          <span class="nav-icon">@</span>
+          <span class="nav-label">Kelola Akun Guru</span>
+        </a>
+        <a href="#settings" class="nav-item" data-route="settings">
+          <span class="nav-icon">&#9881;</span>
+          <span class="nav-label">Pengaturan Sistem</span>
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="teacher-info">
+          <div class="teacher-avatar" id="sbAvatar">G</div>
+          <div>
+            <strong id="sbName">Budi Santoso</strong>
+            <span id="sbRole">Guru Wali Kelas 8A</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Overlay for mobile -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Main content -->
+    <main class="main">
+      <header class="topbar">
+        <button class="menu-toggle" id="menuToggle" aria-label="Buka menu">
+          <span></span><span></span><span></span>
+        </button>
+        <h2 id="pageTitle">Dashboard</h2>
+        <div class="topbar-right">
+          <button class="theme-toggle" id="themeToggle" aria-label="Ganti tema">
+            <span class="theme-icon">⚛</span>
+          </button>
+          <span class="school-year" id="schoolYear">Tahun Ajaran 2024/2025</span>
+          <div class="user-menu">
+            <button class="user-btn" id="userBtn">
+              <div class="user-avatar-sm" id="userAvatar">A</div>
+              <span class="user-name" id="userName">Admin</span>
+            </button>
+            <div class="user-dropdown" id="userDropdown">
+              <div class="user-info-pop">
+                <strong id="userNamePop">Administrator</strong>
+                <span class="badge badge-blue" id="userRolePop">Admin</span>
+              </div>
+              <button class="logout-btn" id="logoutBtn">➜] Keluar</button>
+            </div>
+          </div>
+        </div>
+      </header>
+      <div class="content" id="content">
+        <!-- Dynamic content rendered here -->
+      </div>
+    </main>
+  </div>
+
+  <!-- Scripts: load order matters -->
+  <script src="js/data.js?v=11"></script>
+  <script src="js/app.js?v=11"></script>
+  <script src="js/auth.js?v=11"></script>
+  <script src="js/dashboard.js?v=11"></script>
+  <script src="js/students.js?v=11"></script>
+  <script src="js/analytics.js?v=11"></script>
+  <script src="js/interests.js?v=11"></script>
+  <script src="js/learning.js?v=11"></script>
+  <script src="js/management.js?v=11"></script>
+  <script src="js/accounts.js?v=11"></script>
+  <script src="js/settings.js?v=11"></script>
+</body>
+</html>
